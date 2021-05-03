@@ -1,0 +1,1 @@
+function equal(e,n){let t;if(n instanceof RegExp&&(t=n.test(e)),e===n)return!0;if(t=new RegExp(n,"i").exec(e),t&&e===t[0])return!0;return t}function notEqual(e,n){return!equal(e,n)}module.exports={equal:equal,notEqual:notEqual};

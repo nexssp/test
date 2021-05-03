@@ -1,0 +1,1 @@
+const{equal:equal,notEqual:notEqual}=require("./var.type"),{shouldContain:shouldContain,shouldNotContain:shouldNotContain}=require("./program.type");module.exports={equal:equal,notEqual:notEqual,shouldContain:shouldContain,shouldNotContain:shouldNotContain};
