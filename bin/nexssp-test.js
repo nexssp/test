@@ -6,22 +6,7 @@ const { bold, yellow, red, green } = require("@nexssp/ansi");
 const fs = require("fs");
 const path = require("path");
 (async () => {
-  // Get arguments from CLI
-  const [, , ...args] = process.argv;
-  const params = args.reduce(
-    (f, tof) => {
-      if (tof.startsWith("--")) {
-        f[tof.substring(2).split("=")[0]] = tof.includes("=")
-          ? tof.split("=")[1]
-          : true;
-      } else if (f._) {
-        f._.push(tof);
-      }
-
-      return f;
-    },
-    { _: [] }
-  );
+  const params = require("minimist")(process.argv.slice(2));
 
   if (params._[0] === "help") {
     const pkg = require("../package.json");
@@ -40,16 +25,23 @@ const path = require("path");
   // const glob = process.argv[3] || "**/*.nexss-test.js";
   let glob = params._[1] || "**/*.nexss-test.js";
   let ignore = [];
+
   if (params.select) {
-    glob = "**/*" + params.select + "*.nexss-test.js";
+    if (Array.isArray(params.select)) {
+      glob = params.select.map((e) => "**/*" + e + "*.nexss-test.js");
+    } else {
+      glob = "**/*" + params.select + "*.nexss-test.js";
+    }
+  } else {
+    glob = "**/*.nexss-test.js";
   }
 
-  if (params.ignore) {
+  if (!Array.isArray(params.ignore)) {
     ignore = ignore.concat("!**/" + params.ignore + ".nexss-test.js");
+  } else {
+    const addIgnore = params.ignore.map((e) => "!**/*" + e + "*.nexss-test.js");
+    ignore = ignore.concat(addIgnore);
   }
-
-  // console.log(`select:`, glob);
-  // console.log(`ignore:`, ignore);
 
   header("Starting @nexssp/test module:", path.resolve(from));
   info("Starting testing..");
