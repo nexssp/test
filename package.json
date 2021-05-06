@@ -1,7 +1,7 @@
 {
   "name": "@nexssp/test",
   "description": "Just test and validate your code, FAST and easy.",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "homepage": "https://nexss.com",
   "main": "src/test.js",
   "files": [
@@ -53,7 +53,7 @@
     "@nexssp/ansi": "^1.1.1",
     "@nexssp/extend": "^1.0.2",
     "@nexssp/logdebug": "^1.0.11",
-    "@nexssp/system": "^1.0.1",
+    "@nexssp/system": "^1.0.4",
     "fast-glob": "^3.2.5",
     "minimist": "^1.2.5"
   }
