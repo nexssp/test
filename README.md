@@ -25,12 +25,12 @@ Below example of testing
 
 ```json
 "scripts": {
-    "test": "nexssp-test --ignore=languages", // will ignore languages.nexss-test.js
-    "test:list": "nexssp-test --dry", // will only display list of test files
-    "test:languages:verbose": "nexssp-test --select=languages --verbose", // during test will display
+    "test": "nexssp-test --ignore=languages # will ignore languages.nexss-test.js",
+    "test:selected": "nexssp-test --ignore=languages --select=platform --debug # now will display with the details",
+    "test:continue": "nexssp-test --ignore=languages --continueOnError --debug # will not stop on errors",
+    "test:list": "nexssp-test --dry # just display files which are selected. ommiting ignored ones",
+    "test:languages": "nexssp-test --select=languages --debug",
     "test:all:long": "nexssp-test",
-    "prepare": "npm test && npm run nexss:build",
-    "nexss:build": "npx @nexssp/min@1.0.6"
   },
 ```
 
