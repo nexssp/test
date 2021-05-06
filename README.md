@@ -1,8 +1,8 @@
 # @nexssp/test
 
-Just **FAST**, basic testing.
+Just **FAST**, basic testing and code validator.
 
-**NOTE:** This module is **experimental!** Use only with caution.
+**NOTE:** This module is **experimental!** It works, but may have some issues.
 
 ## Installation
 
