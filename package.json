@@ -1,14 +1,17 @@
 {
   "name": "@nexssp/test",
   "description": "Just test, FAST and easy.",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "homepage": "https://nexss.com",
   "main": "src/test.js",
   "files": [
     "src/**/*"
   ],
   "scripts": {
-    "test": "node ./bin/nexssp-test.js --selected='*languages*'",
+    "test": "nexssp-test --ignore=languages",
+    "test:list": "nexssp-test --dry",
+    "test:languages:verbose": "nexssp-test --select=languages --debug",
+    "test:all:long": "nexssp-test",
     "prepare": "npm run nexss:build",
     "nexss:build": "npx @nexssp/min@1.0.6",
     "nexss:clean": ""
@@ -48,6 +51,7 @@
   ],
   "dependencies": {
     "@nexssp/ansi": "^1.1.1",
+    "@nexssp/extend": "^1.0.2",
     "@nexssp/logdebug": "^1.0.11",
     "fast-glob": "^3.2.5"
   }

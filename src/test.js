@@ -4,7 +4,7 @@ const { error } = require("@nexssp/logdebug");
 const { testOne } = require("./testOne");
 const testAll = async (
   sourceFolder = "./src/",
-  { glob, display = false, ignore = [] } = {}
+  { glob, display = false, ignore = [], dry, stopOnError } = {}
 ) => {
   if (!require("fs").existsSync(sourceFolder)) {
     error(`Source folder does not exist. ${sourceFolder}`);
@@ -29,6 +29,11 @@ const testAll = async (
   // Above we add to ignore: "!**/node_modules"
   const files = await fg([p], { ignore });
 
+  if (dry) {
+    console.log(files);
+    return;
+  }
+
   if (files.length === 0) {
     error(
       bold(`No test files has been found in the ${path.resolve(sourceFolder)}`)
@@ -38,7 +43,9 @@ const testAll = async (
   }
   const processCWD = process.cwd();
   const allPromises = await Promise.all(
-    files.map(async (f) => testOne(`${processCWD}/${f}`, { display }))
+    files.map(async (f) =>
+      testOne(`${processCWD}/${f}`, { display, stopOnError })
+    )
   );
 
   return allPromises;

@@ -1,0 +1,4 @@
+// Validate tests
+
+// - cwd
+// - exitCode

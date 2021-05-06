@@ -23,27 +23,33 @@ const path = require("path");
     { _: [] }
   );
 
+  if (params._[0] === "help") {
+    const pkg = require("../package.json");
+
+    console.log(`   ${bold(pkg.name)}@${pkg.version}`);
+    console.log(`     --select - select name to test. Can be multiple.`);
+    console.log(`     --ignore - select ignore to test. Can be multiple.`);
+    console.log(`     --debug - will show details about errors.`);
+    console.log(
+      `     --continueOnError - It will continue with the tests, and will show details at the end.`
+    );
+    process.exit(0);
+  }
+
   const from = params._[0] || "./";
   // const glob = process.argv[3] || "**/*.nexss-test.js";
   let glob = params._[1] || "**/*.nexss-test.js";
   let ignore = [];
-  if (params.selected) {
-    switch (params.selected) {
-      case "all":
-        // We take everything (by default they are disabled)
-        // ignore = ignore.concat("!languages.nexss-test.js");
-        break;
-      case "languages":
-        glob = "**/*" + params.selected + "*.nexss-test.js";
-        break;
-      default:
-        glob = "**/*" + params.selected + "*.nexss-test.js";
-        // By default languages are disabled (It is long time testing..)
-        // Installing all compilers etc.
-        ignore = ignore.concat("!languages.nexss-test.js");
-        break;
-    }
+  if (params.select) {
+    glob = "**/*" + params.select + "*.nexss-test.js";
   }
+
+  if (params.ignore) {
+    ignore = ignore.concat("!**/" + params.ignore + ".nexss-test.js");
+  }
+
+  // console.log(`select:`, glob);
+  // console.log(`ignore:`, ignore);
 
   header("Starting @nexssp/test module:", path.resolve(from));
   info("Starting testing..");
@@ -53,8 +59,19 @@ const path = require("path");
   // Below remove 1 for cache results (development)
   const file = require("path").resolve("./dev.json");
   if (!params.cache || !fs.existsSync(file)) {
-    result = await testAll(from, { glob, ignore });
-    result.flat();
+    result = await testAll(from, {
+      glob,
+      ignore,
+      dry: params.dry,
+      // default stop on error
+      stopOnError: !params.continueOnError,
+    });
+    if (!Array.isArray(result)) {
+      // Dry?
+      return;
+    } else {
+      result.flat();
+    }
 
     fs.writeFileSync(file, JSON.stringify(result));
   } else {

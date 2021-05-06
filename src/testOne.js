@@ -3,8 +3,11 @@ const { subtest } = require("./subtest");
 const { error, header } = require("@nexssp/logdebug");
 const path = require("path");
 const fs = require("fs");
-const testOne = (file, { startFromTest = 1, display = false } = {}) => {
-  let selected = [];
+const testOne = (
+  file,
+  { startFromTest = 1, display = false, stopOnError } = {}
+) => {
+  let select = [];
 
   const testResult = { file };
   // Loading test definition
@@ -36,9 +39,9 @@ const testOne = (file, { startFromTest = 1, display = false } = {}) => {
   }
 
   // Setup test from, to and which should be ommited
-  // let startFrom = selected.length > 0 ? null : testsDef.startFrom;
-  // let endsWith = selected.length > 0 ? null : testsDef.endsWith;
-  let omit = selected.length > 0 ? null : testsDef.omit;
+  // let startFrom = select.length > 0 ? null : testsDef.startFrom;
+  // let endsWith = select.length > 0 ? null : testsDef.endsWith;
+  let omit = select.length > 0 ? null : testsDef.omit;
 
   // We need separate temporary folder for file operation
   // Later enable, disable.
@@ -54,8 +57,9 @@ const testOne = (file, { startFromTest = 1, display = false } = {}) => {
     if (!fs.existsSync(testPath)) {
       fs.mkdirSync(testPath);
     }
+    // We change path here as it is safer to use empty folder for testing
 
-    // process.chdir(testPath);
+    process.chdir(testPath);
     // TODO: Check below (evalTS doesn;t work without it??)
 
     // We can test uniqueTestValue for each test for example
@@ -67,6 +71,7 @@ const testOne = (file, { startFromTest = 1, display = false } = {}) => {
       file,
       value,
       chdir: testPath,
+      stopOnError,
     });
 
     return f.concat(ss);

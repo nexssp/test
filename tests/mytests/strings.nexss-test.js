@@ -1,7 +1,7 @@
 module.exports = {
   nexsstests: [
     {
-      title: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxShould be equal '${uniqueTestValue}'",
+      title: "Should be equal '${uniqueTestValue}'",
       type: "equal",
       params: ["XXXX", "XXXX"],
     },

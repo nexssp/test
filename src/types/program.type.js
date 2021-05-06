@@ -1,6 +1,7 @@
-const { exe } = require("../lib");
-const { dr, dg, di, error } = require("@nexssp/logdebug");
-const { yellow, green, bold, purple } = require("@nexssp/ansi");
+const { dr, dg, di, error, dy } = require("@nexssp/logdebug");
+const { yellow, green, bold, purple, yellowBG2, red } = require("@nexssp/ansi");
+const { nSpawn } = require("@nexssp/system");
+require("@nexssp/extend")("string");
 
 function shouldNotContain(test, regE, options) {
   return should(arguments.callee.name, test, regE, options);
@@ -10,17 +11,16 @@ function shouldContain(test, regE, options) {
   return should(arguments.callee.name, test, regE, options);
 }
 
+function checkExitCode(exitCode, result) {
+  return result.exitCode === exitCode;
+}
+
 function should(
   fname,
   test,
   regE,
   { chdir, nxsInspect, stopOnError = false } = {}
 ) {
-  // if (chdir) {
-  //   dg(`Changing directory from ${process.cwd()} -> ${chdir}`);
-  //   process.chdir(chdir);
-  // }
-
   if (test == "null") {
     //YES NULL as STRING
     if (!process.testData) {
@@ -30,13 +30,50 @@ function should(
     dg(`Using cached result of previous command: ${bold(process.testTest)}`);
     data = process.testData;
   } else {
-    process.testTest = test;
     // out(`${red(bright(test))} `);
     // logToFile(` >>>>>>> ${test} <<<<<<<`);
     // data = process.testData = exe(test);
     // We make sure there are no terminal colors signs as tests fails..
-    dg(`Changing folder ${bold(chdir)}`);
-    const r = exe(test, { cwd: chdir });
+    if (chdir) {
+      dg(`Set folder location in options: ${bold(chdir)}`);
+    } else {
+      dy(`No folder to change the location. process.cwd()`, process.cwd());
+    }
+
+    // for nSpawn we pass full command like: nexss Id --debug. We are not separating args
+    const result = nSpawn(test, { cwd: chdir });
+    // Result is with r.exitCode
+    r = result.stdout + result.stderr;
+
+    // Check exitCode if specified
+    if (arguments[3] && arguments[3].exitCode) {
+      if (!checkExitCode(arguments[3].exitCode, result)) {
+        dr(
+          `Exit Code does not match: ${arguments[3].exitCode}!=${result.exitCode}`
+        );
+        return false;
+      } else {
+        // if (!data) {
+        //   result true;
+        // }
+      }
+    } else if (result.exitCode !== 0) {
+      console.log(
+        yellowBG2(
+          red(bold(`Exit Code should be 0. Now it is: ${result.exitCode}`))
+        )
+      );
+
+      if (stopOnError) {
+        error(
+          "Stop on error is enabled. STOPPED. To continue all tests remove --stopOnError"
+        );
+        process.exit(0);
+      }
+
+      return false;
+    }
+
     data = process.testData =
       r && r.replace
         ? r.replace(
@@ -48,7 +85,7 @@ function should(
 
   // out("return: ", test, data);
 
-  //   out(`>>> ${camelCase(fname)}: ${bright(green(regE))}`);
+  dg(`>>> ${fname.camelCase()}: ${bold(green(regE))}`);
   let result, result2, result3, match;
   // out(data);
   if (data) {
@@ -119,7 +156,9 @@ function should(
 
   dr(bold("process.cwd()", process.cwd()));
   if (stopOnError) {
-    error("Stop on error is enabled. STOPPED");
+    error(
+      "Stop on error is enabled. STOPPED. To continue all tests remove --stopOnError"
+    );
     process.exit(0);
   }
 }
