@@ -49,7 +49,7 @@ function should(
     if (arguments[3] && arguments[3].exitCode) {
       if (!checkExitCode(arguments[3].exitCode, result)) {
         dr(
-          `Exit Code does not match: ${arguments[3].exitCode}!=${result.exitCode}`
+          `Exit Code does not match: SHOULD BE: ${arguments[3].exitCode}!= RECEIVED: ${result.exitCode}`
         );
         return false;
       } else {

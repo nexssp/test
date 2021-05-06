@@ -1,7 +1,7 @@
 {
   "name": "@nexssp/test",
   "description": "Just test and validate your code, FAST and easy.",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "homepage": "https://nexss.com",
   "main": "src/test.js",
   "files": [
