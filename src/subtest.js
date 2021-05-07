@@ -15,10 +15,15 @@ const subtest = (
   let keepchdir = null; // To keep chdir option. it is keepchdir
   const rrr = allTests.nexsstests.map((subtestItem) => {
     subtestItem.file = file;
-    subtestItem.title =
-      subtestItem.title.indexOf("$") === -1 || !value
-        ? subtestItem.title
-        : evalTS(subtestItem.title, value); //evalTS(subtestItem.title, topTest);
+
+    if (subtestItem.title) {
+      subtestItem.title =
+        subtestItem.title.indexOf("$") === -1 || !value
+          ? subtestItem.title
+          : evalTS(subtestItem.title, value); //evalTS(subtestItem.title, topTest);
+    } else {
+      subtestItem.title = subtestItem.params[0];
+    }
 
     //   subtestItemResult.topTest = topTest;
 
