@@ -42,6 +42,7 @@ function should(
 
     // for nSpawn we pass full command like: nexss Id --debug. We are not separating args
     const result = nSpawn(test, { cwd: chdir });
+
     // Result is with r.exitCode
     r = result.stdout + result.stderr;
 
@@ -51,6 +52,12 @@ function should(
         dr(
           `Exit Code does not match: SHOULD BE: ${arguments[3].exitCode}!= RECEIVED: ${result.exitCode}`
         );
+
+        console.log("output stdout:");
+        console.log(r.stdout);
+        console.log("output stdout:");
+        console.log(r.stderr);
+
         return false;
       } else {
         // if (!data) {
@@ -64,6 +71,11 @@ function should(
         )
       );
 
+      console.log("output stdout:");
+      console.log(r.stdout);
+      console.log("output stdout:");
+      console.log(r.stderr);
+
       if (stopOnError) {
         error(
           "Stop on error is enabled. STOPPED. To continue all tests remove --stopOnError"
@@ -73,17 +85,14 @@ function should(
 
       return false;
     }
-
-    data = process.testData =
-      r && r.replace
-        ? r.replace(
-            /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
-            ""
-          )
-        : r;
   }
-
-  // out("return: ", test, data);
+  data = process.testData =
+    r && r.replace
+      ? r.replace(
+          /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
+          ""
+        )
+      : r;
 
   dg(`>>> ${fname.camelCase()}: ${bold(green(regE))}`);
   let result, result2, result3, match;

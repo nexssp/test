@@ -97,7 +97,16 @@ const subtest = (
     subtestItem.result = testExecuteResult;
     subtestItem.testBody = testBody;
     if (!testExecuteResult) {
-      dr(bold("FAILED.\n"));
+      error(bold("FAILED: " + file));
+      error(bold("title: " + subtestItem.title));
+      error(
+        bold(
+          subtestItem.params.reduce((f, toFlat) => {
+            f += `\n${toFlat}`;
+            return f;
+          }, "")
+        )
+      );
       subtestItem.ok = false;
       totalFailed++;
       if (stopOnError) {
