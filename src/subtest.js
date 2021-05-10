@@ -39,6 +39,9 @@ const subtest = (
     //     }
     subtestItem.testType = typeOfTest;
 
+    const typeOfTestFunction =
+      subtestItem.testFunction || allTests.defaultTestFunction || "nExec";
+
     if (!subtestItem.params) {
       error("check:", file);
       error("No parames on test", subtestItem.title);
@@ -92,7 +95,7 @@ const subtest = (
           return evalTS(p, value);
         }
       }),
-      { chdir, testFunction: subtestItem.testFunction }
+      { chdir, testFunction: typeOfTestFunction }
     );
 
     subtestItem.result = testExecuteResult;

@@ -19,5 +19,24 @@ module.exports = {
         /yyyy/,
       ],
     },
+    {
+      type: "shouldContain",
+      testFunction: "nSpawn",
+      params: [
+        `node ${__dirname.replace(/\\/g, "/")}/test_stdio.js '' 'yyyy' 1`,
+        /yyyy/,
+      ],
+    },
+    {
+      type: "shouldContain",
+      testFunction: "nSpawn",
+      params: [
+        `node ${__dirname.replace(/\\/g, "/")}/test_stdio.js '' 'yyyy' 13`,
+        /yyyy/,
+        {
+          exitCode: 13,
+        },
+      ],
+    },
   ],
 };
