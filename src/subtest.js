@@ -2,6 +2,7 @@ const testTypes = require("./types");
 const { error, dbg, dg, dr, dy, header } = require("@nexssp/logdebug");
 const { yellow, bold, magenta, green } = require("@nexssp/ansi");
 const path = require("path");
+const { inspect } = require("util");
 const subtest = (
   allTests,
   { file, value, display = false, chdir, stopOnError } = {}
@@ -53,7 +54,7 @@ const subtest = (
       `${bold(yellow(evalTS(subtestItem.params[0], value)))}\n${bold(
         yellow(typeOfTest)
       )}  ==>\n ${bold(subtestItem.params[1])}`,
-      bold(subtestItem.params[2])
+      bold(inspect(subtestItem.params[2]))
     );
 
     // Keep changing directory for the next tests..
@@ -91,7 +92,7 @@ const subtest = (
           return evalTS(p, value);
         }
       }),
-      { chdir }
+      { chdir, testFunction: subtestItem.testFunction }
     );
 
     subtestItem.result = testExecuteResult;
@@ -102,7 +103,7 @@ const subtest = (
       error(
         bold(
           subtestItem.params.reduce((f, toFlat) => {
-            f += `\n${toFlat}`;
+            f += `\n${inspect(toFlat)}`;
             return f;
           }, "")
         )

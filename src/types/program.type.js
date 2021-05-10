@@ -1,6 +1,6 @@
 const { dr, dg, di, error, dy } = require("@nexssp/logdebug");
 const { yellow, green, bold, purple, yellowBG2, red } = require("@nexssp/ansi");
-const { nExec } = require("@nexssp/system");
+const { nExec, nSpawn } = require("@nexssp/system");
 require("@nexssp/extend")("string");
 
 function shouldNotContain(test, regE, options) {
@@ -19,7 +19,7 @@ function should(
   fname,
   test,
   regE,
-  { chdir, nxsInspect, stopOnError = false } = {}
+  { chdir, nxsInspect, stopOnError = false, testFunction = nExec } = {}
 ) {
   if (test == "null") {
     //YES NULL as STRING
@@ -40,8 +40,10 @@ function should(
       dy(`No folder to change the location. process.cwd()`, process.cwd());
     }
 
+    const functionForExe = eval(testFunction) || nExec;
+
     // for nSpawn we pass full command like: nexss Id --debug. We are not separating args
-    const result = nExec(test, { cwd: chdir });
+    const result = functionForExe(test, { cwd: chdir });
 
     // Result is with r.exitCode
     r = result.stdout + result.stderr;
@@ -52,11 +54,14 @@ function should(
         dr(
           `Exit Code does not match: SHOULD BE: ${arguments[3].exitCode}!= RECEIVED: ${result.exitCode}`
         );
-
-        console.log("output stdout:");
-        console.log(r.stdout);
-        console.log("output stdout:");
-        console.log(r.stderr);
+        if (!r.stdout && !r.stderr) {
+          console.error(r);
+        } else {
+          console.log("output stdout:");
+          console.log(r.stdout);
+          console.log("output stderr:");
+          console.log(r.stderr);
+        }
 
         return false;
       } else {
@@ -73,7 +78,7 @@ function should(
 
       console.log("output stdout:");
       console.log(r.stdout);
-      console.log("output stdout:");
+      console.log("output stderr:");
       console.log(r.stderr);
 
       if (stopOnError) {
