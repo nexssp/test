@@ -53,7 +53,7 @@
     "@nexssp/ansi": "^1.1.1",
     "@nexssp/extend": "^1.0.7",
     "@nexssp/logdebug": "^1.0.12",
-    "@nexssp/system": "^1.0.5",
+    "@nexssp/system": "^1.0.9",
     "fast-glob": "^3.2.5",
     "minimist": "^1.2.5"
   }

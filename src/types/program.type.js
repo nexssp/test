@@ -1,6 +1,6 @@
 const { dr, dg, di, error, dy } = require("@nexssp/logdebug");
 const { yellow, green, bold, purple, yellowBG2, red } = require("@nexssp/ansi");
-const { nSpawn } = require("@nexssp/system");
+const { nExec } = require("@nexssp/system");
 require("@nexssp/extend")("string");
 
 function shouldNotContain(test, regE, options) {
@@ -41,7 +41,7 @@ function should(
     }
 
     // for nSpawn we pass full command like: nexss Id --debug. We are not separating args
-    const result = nSpawn(test, { cwd: chdir });
+    const result = nExec(test, { cwd: chdir });
 
     // Result is with r.exitCode
     r = result.stdout + result.stderr;
