@@ -55,8 +55,8 @@ nexsstests: [
 ],
 ```
 
-- equal - is used to compare values.
-- notEqual
+- equal, match - is used to compare values. (also you can use regular expression, see above example)
+- notEqual, notMatch - negative of equal, match
 
 ```json
 nexsstests: [
