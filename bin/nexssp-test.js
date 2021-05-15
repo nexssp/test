@@ -7,10 +7,8 @@ const fs = require("fs");
 const path = require("path");
 (async () => {
   const params = require("minimist")(process.argv.slice(2));
-
+  const pkg = require("../package.json");
   if (params._[0] === "help") {
-    const pkg = require("../package.json");
-
     console.log(`   ${bold(pkg.name)}@${pkg.version}`);
     console.log(`     --select - select name to test. Can be multiple.`);
     console.log(`     --ignore - select ignore to test. Can be multiple.`);
@@ -43,13 +41,16 @@ const path = require("path");
     ignore = ignore.concat(addIgnore);
   }
 
-  header("Starting @nexssp/test module:", path.resolve(from));
+  header(
+    `Starting ${bold(pkg.name)}@${bold(green(pkg.version))} module:`,
+    path.resolve(from)
+  );
   info("Starting testing..");
   let result;
   console.time(bold("@nexssp/test"));
 
   // Below remove 1 for cache results (development)
-  const file = require("path").resolve("./dev.json");
+  const file = require("path").resolve("./cache.nexss-test.json");
   if (!params.cache || !fs.existsSync(file)) {
     result = await testAll(from, {
       glob,
@@ -65,7 +66,7 @@ const path = require("path");
       result.flat();
     }
 
-    fs.writeFileSync(file, JSON.stringify(result));
+    fs.writeFileSync(file, JSON.stringify(result, null, 2));
   } else {
     result = require(file);
   }
