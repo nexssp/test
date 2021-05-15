@@ -34,6 +34,42 @@ Below example of testing
   },
 ```
 
+## Test types
+
+### Program types
+
+- **shouldContain** - is used for cli command - **default** if type is not specified,
+- **shouldNotContain** - the same as above but negative of result.
+
+```json
+nexsstests: [
+    {
+      // it will run command nexss and compare with the specified regexp.
+      params: ["nexss", /"nexss":"(\d).(\d*).(\d*)"/,{
+        exitCode:1, // if not specified 0 will be checked
+        // chdir: "MyTestProject", // only once will change dir
+        keepchdir: "MyTestProject", // will keep changing dir on the next tests in that file.
+      }],
+
+    },
+],
+```
+
+- equal - is used to compare values.
+- notEqual
+
+```json
+nexsstests: [
+  {
+    title: "Should be equal", // optional / if not exists param[0] will be used for title.
+    type: "equal",
+    params: ["XXXX", /XXXX/],
+  }
+]
+```
+
 ## Examples
 
-- See Nexss Programmer's tests folder **2.4.0+**
+In progress..
+
+- For more see Nexss Programmer's tests folder **2.4.0+**

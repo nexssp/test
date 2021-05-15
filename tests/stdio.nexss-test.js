@@ -25,6 +25,9 @@ module.exports = {
       params: [
         `node ${__dirname.replace(/\\/g, "/")}/test_stdio.js '' 'yyyy' 1`,
         /yyyy/,
+        {
+          exitCode: 1,
+        },
       ],
     },
     {
