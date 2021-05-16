@@ -1,5 +1,5 @@
 const testTypes = require("./types");
-const { error, dbg, dg, dr, dy, header } = require("@nexssp/logdebug");
+const { error, dbg, dg, dr, dy, header, warn } = require("@nexssp/logdebug");
 const { yellow, bold, magenta, green } = require("@nexssp/ansi");
 const path = require("path");
 const { inspect } = require("util");
@@ -19,7 +19,9 @@ const subtest = (
 
     if (subtestItem.title) {
       subtestItem.title =
-        subtestItem.title.indexOf("$") === -1 || !value
+        (subtestItem.title.indexOf("$") === -1 || !value) &&
+        !subtestItem.notEval &&
+        !allTests.notEval
           ? subtestItem.title
           : evalTS(subtestItem.title, value); //evalTS(subtestItem.title, topTest);
     } else {
@@ -53,10 +55,20 @@ const subtest = (
     console.log(bold(green(`${value}, ${subtestItem.title}`)));
     console.log(`FILE:  ${magenta(bold(file))}`);
 
+    let titleEval;
+    if (allTests.notEval || subtestItem.notEval) {
+      titleEval =
+        require("util").inspect(subtestItem.params[0]) +
+        ", value not evaluated: " +
+        value;
+    } else {
+      titleEval = evalTS(subtestItem.params[0], value);
+    }
+
     dbg(
-      `${bold(yellow(evalTS(subtestItem.params[0], value)))}\n${bold(
-        yellow(typeOfTest)
-      )}  ==>\n ${bold(subtestItem.params[1])}`,
+      `${bold(yellow(titleEval))}\n${bold(yellow(typeOfTest))}  ==>\n ${bold(
+        subtestItem.params[1]
+      )}`,
       bold(inspect(subtestItem.params[2]))
     );
 
@@ -137,5 +149,17 @@ function evalTS(v, uniqueTestValue) {
   // value must be here!!!
   // Below needs tobe here for eval.
   // Add more here vars if needed for eval of titles.
-  return eval("`" + v + "`");
+  try {
+    return eval("`" + v + "`");
+  } catch (er) {
+    warn(
+      bold(
+        "===> EvalTS failed" +
+          "\nTry to disable evaluation of command.  allTests.notEval || subtestItem.notEval\n" +
+          er +
+          "\nBut failed expression will be compared."
+      )
+    );
+    return v;
+  }
 }
