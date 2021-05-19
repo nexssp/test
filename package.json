@@ -1,18 +1,19 @@
 {
   "name": "@nexssp/test",
   "description": "Just test and validate your code, FAST and easy.",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "homepage": "https://nexss.com",
   "main": "src/test.js",
   "files": [
-    "src/**/*"
+    "src/**/*",
+    "bin/*"
   ],
   "scripts": {
-    "test": "node ./bin/nexssp-test.js --select=stdio --debug",
+    "test": "node ./bin/nexssp-test.js --debug",
     "test:list": "nexssp-test --dry",
     "test:languages:verbose": "nexssp-test --select=languages --debug",
     "test:all:long": "nexssp-test",
-    "prepare": "npm run nexss:build",
+    "prepare2": "npm run nexss:build",
     "nexss:build": "npx @nexssp/min@1.0.6",
     "nexss:clean": ""
   },
@@ -50,11 +51,17 @@
     }
   ],
   "dependencies": {
-    "@nexssp/ansi": "^1.1.1",
-    "@nexssp/extend": "^1.0.7",
-    "@nexssp/logdebug": "^1.0.12",
+    "@nexssp/ansi": "^1.1.2",
+    "@nexssp/extend": "^1.0.18",
+    "@nexssp/logdebug": "^1.0.15",
     "@nexssp/system": "^1.0.12",
     "fast-glob": "^3.2.5",
     "minimist": "^1.2.5"
+  },
+  "devDependencies": {
+    "prettier": "^2.3.0"
+  },
+  "eslintConfig": {
+    "extends": "plugin:unicorn/recommended"
   }
 }

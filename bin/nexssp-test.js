@@ -16,6 +16,7 @@ const path = require("path");
     console.log(
       `     --continueOnError - It will continue with the tests, and will show details at the end.`
     );
+    /* eslint-disable no-process-exit */
     process.exit(0);
   }
 

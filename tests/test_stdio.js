@@ -9,5 +9,6 @@ if (stderr) {
   console.error(stderr);
 }
 if (exitCode) {
+  /* eslint-disable no-process-exit */
   process.exit(exitCode);
 }

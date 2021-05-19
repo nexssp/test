@@ -1,14 +1,12 @@
-const testTypes = require("./types");
-const { error, dbg, dg, dr, dy, header, warn } = require("@nexssp/logdebug");
-const { yellow, bold, magenta, green } = require("@nexssp/ansi");
-const path = require("path");
-const { inspect } = require("util");
-const subtest = (
-  allTests,
-  { file, value, display = false, chdir, stopOnError } = {}
-) => {
+const subtest = (allTests, { file, value, chdir, stopOnError } = {}) => {
+  const testTypes = require("./types");
+  const { error, dbg, dg, dy, header } = require("@nexssp/logdebug");
+  const { yellow, bold, magenta, green } = require("@nexssp/ansi");
+  const path = require("path");
+  const { inspect } = require("util");
   if (!allTests.nexsstests) {
     error("check:", file);
+    /* eslint-disable no-process-exit */
     process.exit(1);
   }
   let totalOk = 0;
@@ -47,6 +45,7 @@ const subtest = (
     if (!subtestItem.params) {
       error("check:", file);
       error("No parames on test", subtestItem.title);
+      /* eslint-disable no-process-exit */
       process.exit(1);
     }
 
@@ -66,10 +65,10 @@ const subtest = (
     }
 
     dbg(
-      `${bold(yellow(titleEval))}\n${bold(yellow(typeOfTest))}  ==>\n ${bold(
+      `${bold(yellow(titleEval))}\n${bold(yellow(typeOfTest))}  ==>\n${bold(
         subtestItem.params[1]
       )}`,
-      bold(inspect(subtestItem.params[2]))
+      subtestItem.params[2] ? bold(inspect(subtestItem.params[2])) : ""
     );
 
     // Keep changing directory for the next tests..
@@ -95,7 +94,7 @@ const subtest = (
 
     dy(bold(`chdir is: `, chdir));
 
-    const testExecuteResult = eval(testTypes[typeOfTest])(
+    const testExecuteResult = testTypes[`${typeOfTest}`](
       ...subtestItem.params.map((p) => {
         if (
           (p !== null && typeof p === "object") ||
@@ -146,11 +145,12 @@ const subtest = (
 module.exports = { subtest };
 
 function evalTS(v, uniqueTestValue) {
-  // value must be here!!!
+  // uniqueTestValue must be here!!!
   // Below needs tobe here for eval.
   // Add more here vars if needed for eval of titles.
+  // return v.interpolate({ uniqueTestValue });
   try {
-    return eval("`" + v + "`");
+    return v;
   } catch (er) {
     warn(
       bold(

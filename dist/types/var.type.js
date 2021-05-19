@@ -1,1 +1,0 @@
-function equal(u,e){return e instanceof RegExp?e.test(u):u===e||void 0}function notEqual(u,e){return!equal(u,e)}module.exports={equal:equal,notEqual:notEqual};

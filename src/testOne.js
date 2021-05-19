@@ -3,24 +3,20 @@ const { subtest } = require("./subtest");
 const { error, header } = require("@nexssp/logdebug");
 const path = require("path");
 const fs = require("fs");
-const testOne = (
-  file,
-  { startFromTest = 1, display = false, stopOnError } = {}
-) => {
-  let select = [];
+const testOne = (file, { startFromTest = 1, stopOnError } = {}) => {
+  // let select = [];
 
   const testResult = { file };
   // Loading test definition
   let testsDef;
-  testsDef = require(file);
-
-  // For no values test (separate tests for each unique value)
-  // We peform one with Nexss
-  if (!testsDef.uniqueTestValues) {
-    testsDef.uniqueTestValues = ["Nexss"];
-  }
-
   try {
+    testsDef = require(file);
+
+    // For no values test (separate tests for each unique value)
+    // We peform one with Nexss
+    if (!testsDef.uniqueTestValues) {
+      testsDef.uniqueTestValues = ["Nexss"];
+    }
   } catch (e) {
     if (fs.existsSync(file)) {
       error(
@@ -35,13 +31,14 @@ const testOne = (
       error(`File has not been found: ${file}.`);
     }
     error(bold("PROCESS CWD: ", process.cwd()));
+    /* eslint-disable no-process-exit */
     process.exit(1);
   }
 
   // Setup test from, to and which should be ommited
   // let startFrom = select.length > 0 ? null : testsDef.startFrom;
   // let endsWith = select.length > 0 ? null : testsDef.endsWith;
-  let omit = select.length > 0 ? null : testsDef.omit;
+  // let omit = select.length > 0 ? null : testsDef.omit;
 
   // We need separate temporary folder for file operation
   // Later enable, disable.

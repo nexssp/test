@@ -1,1 +1,0 @@
-const{exe:exe}=require("../lib"),command="nexss Output/End 'works on Ubuntu' --platform:check='UBUNTU' --platform:noerror";(async()=>{console.log(await exe(command))})();

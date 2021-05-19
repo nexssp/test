@@ -8,6 +8,7 @@ const testAll = async (
 ) => {
   if (!require("fs").existsSync(sourceFolder)) {
     error(`Source folder does not exist. ${sourceFolder}`);
+    /* eslint-disable no-process-exit */
     process.exit(1);
   }
 
@@ -20,6 +21,7 @@ const testAll = async (
 
   if (!sourceFolder.endsWith("/") && !sourceFolder.endsWith("\\")) {
     error("Source folder must contain at the end '/' eg: ./src/");
+    /* eslint-disable no-process-exit */
     process.exit(1);
   }
 
@@ -39,6 +41,7 @@ const testAll = async (
       bold(`No test files has been found in the ${path.resolve(sourceFolder)}`)
     );
     error(bold("Please remove testing command or add/check testing files."));
+    /* eslint-disable no-process-exit */
     process.exit(1);
   }
   const processCWD = process.cwd();

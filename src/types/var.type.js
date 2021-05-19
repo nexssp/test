@@ -1,5 +1,13 @@
+function isFunction(f) {
+  return f && {}.toString.call(f) === "[object Function]";
+}
 function equal(test, regE) {
-  let result;
+  // let result;
+  if (isFunction(test)) {
+    test = test();
+    console.log("Result of function: ", test);
+  }
+
   if (regE instanceof RegExp) {
     return regE.test(test);
     // process.exit(1);

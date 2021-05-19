@@ -1,5 +1,6 @@
 const { dr, dg, di, error, dy } = require("@nexssp/logdebug");
 const { yellow, green, bold, purple, yellowBG2, red } = require("@nexssp/ansi");
+/* eslint-disable no-unused-vars */
 const { nExec, nSpawn } = require("@nexssp/system");
 require("@nexssp/extend")("string");
 
@@ -19,12 +20,14 @@ function should(
   fname,
   test,
   regE,
-  { chdir, nxsInspect, stopOnError = false, testFunction = nExec } = {}
+  { chdir, nxsInspect, stopOnError = false, testFunction = "nExec" } = {}
 ) {
+  let r, data;
   if (test == "null") {
     //YES NULL as STRING
     if (!process.testData) {
       console.error("You need to specify REGEXP or STRING for the first test.");
+      /* eslint-disable no-process-exit */
       process.exit();
     }
     dg(`Using cached result of previous command: ${bold(process.testTest)}`);
@@ -39,8 +42,16 @@ function should(
     } else {
       dy(`No folder to change the location. process.cwd()`, process.cwd());
     }
-
-    const functionForExe = eval(testFunction) || nExec;
+    let functionForExe;
+    switch (testFunction) {
+      case "nExec":
+        functionForExe = nExec;
+        break;
+      case "nSpawn":
+      default:
+        functionForExe = nSpawn;
+        break;
+    }
 
     // for nSpawn we pass full command like: nexss Id --debug. We are not separating args
     const result = functionForExe(test, { cwd: chdir });
@@ -125,7 +136,7 @@ function should(
 
   // out(result);
   // out(result2);
-  if (result && !regE instanceof RegExp) {
+  if (result && !(regE instanceof RegExp)) {
     // out(magenta(bright("TEST OK!\n")));
     // console.error(yellow(data));
     return match;
@@ -179,7 +190,7 @@ function should(
 
 function test2(ext) {
   const c = `nexss randomfile${ext}`;
-  out(`Test2: ${c}`);
+  // out(`Test2: ${c}`);
   return c;
 }
 

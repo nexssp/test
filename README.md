@@ -1,5 +1,23 @@
 # @nexssp/test
 
+- **NEW** - now you can also pass functions! Example:
+
+```js
+// Example of the test with function
+{
+  type: "equal",
+  params: [
+    () => { // function to check (function MUST return value to check)
+      const os = require("@nexssp/os");
+      return os.name();
+    },
+    (process.platform = "win32" // check the result by regular expression (or string)
+      ? /(?:Windows)/
+      : /(?:Ubuntu|Alpine|somethingelse)/),
+  ],
+}
+```
+
 Just **FAST**, basic testing and code validator.
 
 **NOTE:** This module is **experimental!** It works, but may have some issues.

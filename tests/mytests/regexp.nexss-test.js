@@ -1,5 +1,3 @@
-let values = ["some1"];
-
 module.exports = {
   nexsstests: [
     {
