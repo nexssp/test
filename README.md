@@ -59,7 +59,7 @@ Below example of testing
 - **shouldContain** - is used for cli command - **default** if type is not specified,
 - **shouldNotContain** - the same as above but negative of result.
 
-```json
+```js
 nexsstests: [
     {
       // it will run command nexss and compare with the specified regexp.
@@ -76,14 +76,14 @@ nexsstests: [
 - equal, match - is used to compare values. (also you can use regular expression, see above example)
 - notEqual, notMatch - negative of equal, match
 
-```json
+```js
 nexsstests: [
   {
     title: "Should be equal", // optional / if not exists param[0] will be used for title.
     type: "equal",
     params: ["XXXX", /XXXX/],
-  }
-]
+  },
+];
 ```
 
 ## Examples
