@@ -11,9 +11,9 @@
       const os = require("@nexssp/os");
       return os.name();
     },
-    (process.platform = "win32" // check the result by regular expression (or string)
+    process.platform === "win32" // check the result by regular expression (or string)
       ? /(?:Windows)/
-      : /(?:Ubuntu|Alpine|somethingelse)/),
+      : /(?:Ubuntu|Alpine|somethingelse)/,
   ],
 }
 ```
