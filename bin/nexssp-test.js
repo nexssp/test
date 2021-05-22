@@ -59,7 +59,7 @@ const path = require("path");
       dry: params.dry,
       // default stop on error
       stopOnError: !params.continueOnError,
-    });
+    }).catch((e) => console.error("There was an error during tests:", e));
     if (!Array.isArray(result)) {
       // Dry?
       return;
