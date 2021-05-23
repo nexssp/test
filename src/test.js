@@ -34,14 +34,14 @@ const testAll = async (
   const assert_files = await fg([p_assert], { ignore });
 
   if (dry) {
-    console.log("Nexss Tests:");
+    console.log("Standard Tests:");
     console.log(files);
-    console.log("Nexss Tests:");
+    console.log("Assert Tests:");
     console.log(assert_files);
     return;
   }
 
-  if (files.length === 0 || assert_files.length === 0) {
+  if (files.length === 0 && assert_files.length === 0) {
     error(
       bold(`No test files has been found in the ${path.resolve(sourceFolder)}`)
     );
