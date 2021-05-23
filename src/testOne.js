@@ -57,6 +57,7 @@ const testOne = (file, { startFromTest = 1, stopOnError } = {}) => {
     // We change path here as it is safer to use empty folder for testing
 
     process.chdir(testPath);
+    process.env.NEXSS_TEST_FOLDER_CURRENT = testPath;
     // TODO: Check below (evalTS doesn;t work without it??)
 
     // We can test uniqueTestValue for each test for example

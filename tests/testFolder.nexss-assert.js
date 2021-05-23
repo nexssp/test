@@ -10,3 +10,5 @@ assert.ok(compare(testFolder, /Nexss-test-/));
 const tf = createNewTestFolder();
 const _fs = require("fs");
 assert.ok(_fs.existsSync(tf));
+
+assert.match(process.env.NEXSS_TEST_FOLDER_CURRENT, /Nexss-test-/);

@@ -1,6 +1,7 @@
 # @nexssp/test
 
-- **NEW** new function **createTestFolder**
+- **NEW** new function **getNewTestFolder**, **createNewTestFolder**
+- `process.env.NEXSS_TEST_FOLDER_CURRENT` - which can be used as current folder during assert tests. **@nexssp/test** creates new test folder for each test - you can access it just by this env variable.
 
 ```js
 const { createNewTestFolder } = require("@nexssp/test");
@@ -9,7 +10,7 @@ const testFolder = createNewTestFolder();
 
 - **NEW** file types:
 
-- \*.nexss-assert.js - now you can add just plain js files, which must run ok. You can use there also great NodeJS assert library. For more please look at compare function test in this repository `tests\compare.nexss-assert.js`
+- **\*.nexss-assert.js** - create files with extension .nexss-assert.js and put testing there .. You can use there also **great NodeJS assert library**. For more please look at compare function test in this repository `tests\compare.nexss-assert.js`
 
 ```js
 // compare.nexss-assert.js
