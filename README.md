@@ -1,5 +1,12 @@
 # @nexssp/test
 
+- **NEW** new function **createTestFolder**
+
+```js
+const { createNewTestFolder } = require("@nexssp/test");
+const testFolder = createNewTestFolder();
+```
+
 - **NEW** file types:
 
 - \*.nexss-assert.js - now you can add just plain js files, which must run ok. You can use there also great NodeJS assert library. For more please look at compare function test in this repository `tests\compare.nexss-assert.js`

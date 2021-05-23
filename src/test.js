@@ -70,4 +70,22 @@ const testAll = async (
   return [...allPromises, ...allAssertions];
 };
 
-module.exports = { testAll };
+function getNewTestFolder(testPathFolder) {
+  const tempFolder = testPathFolder ? testPathFolder : require("os").tmpdir();
+  const testFolderName = `Nexss-test-${Math.random()
+    .toString(36)
+    .substring(2)}`;
+  return path.join(tempFolder, testFolderName);
+}
+
+function createNewTestFolder(testPathFolder) {
+  const testPath = getNewTestFolder(testPathFolder);
+  const _fs = require("fs");
+  if (!_fs.existsSync(testPath)) {
+    _fs.mkdirSync(testPath);
+  }
+
+  return testPath;
+}
+
+module.exports = { testAll, getNewTestFolder, createNewTestFolder };

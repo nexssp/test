@@ -1,3 +1,7 @@
+const _log = require("@nexssp/logdebug");
+const { bold } = require("@nexssp/ansi");
+const { inspect } = require("util");
+
 function isFunction(f) {
   return f && {}.toString.call(f) === "[object Function]";
 }
@@ -11,6 +15,7 @@ const compare = (val1, val2, optionalMessages) => {
 
   if (isFunction(val1)) {
     val1 = val1();
+    _log.dc(bold("Result of function: @compare val1"), bold(inspect(val1)));
     // console.log("result function of val1: ", val1, optionalMessages);
     if (optionalMessages) {
       console.log(optionalMessages);
@@ -19,6 +24,7 @@ const compare = (val1, val2, optionalMessages) => {
 
   if (isFunction(val2)) {
     val2 = val2();
+    _log.dc(bold("Result of function: @compare val2"), bold(inspect(val2)));
     // console.log("result function of val2: ", val2, optionalMessages);
     if (optionalMessages) {
       console.log(optionalMessages);
