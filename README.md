@@ -1,7 +1,7 @@
 # @nexssp/test
 
 - **NEW** new function **getNewTestFolder**, **createNewTestFolder**
-- `process.env.NEXSS_TEST_FOLDER_CURRENT` - which can be used as current folder during assert tests. **@nexssp/test** creates new test folder for each test - you can access it just by this env variable.
+- ~~`process.env.NEXSS_TEST_FOLDER_CURRENT` - which can be used as current folder during assert tests. **@nexssp/test** creates new test folder for each test - you can access it just by this env variable.~~
 
 ```js
 const { createNewTestFolder } = require("@nexssp/test");

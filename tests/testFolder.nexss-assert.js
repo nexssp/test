@@ -11,4 +11,5 @@ const tf = createNewTestFolder();
 const _fs = require("fs");
 assert.ok(_fs.existsSync(tf));
 
+// Below only works in the @nexssp/test testing.
 assert.match(process.env.NEXSS_TEST_FOLDER_CURRENT, /Nexss-test-/);
