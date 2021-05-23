@@ -1,5 +1,11 @@
 const { equal, notEqual } = require("./var.type");
 const { shouldContain, shouldNotContain } = require("./program.type");
+const {
+  fileExists,
+  notFileExists,
+  fileHasContent,
+  notFileHasContent,
+} = require("./file.type");
 
 module.exports = {
   match: equal,
@@ -8,4 +14,8 @@ module.exports = {
   notEqual,
   shouldContain,
   shouldNotContain,
+  fileExists,
+  notFileExists,
+  fileHasContent,
+  notFileHasContent,
 };

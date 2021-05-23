@@ -1,5 +1,35 @@
 # @nexssp/test
 
+- **NEW** File checking exists, content
+
+New tests: **fileExists**, **notFileExists**, **fileHasContent**, **notFileHasContent**
+
+```js
+// Basic Example
+{
+  title: "File should have content",
+  type: "fileHasContent",
+  params: ["myfilename.txt","content in the file"],
+},
+```
+
+```js
+// Advanced Example (use of function): test creates file and test for its content.
+{
+  title: "File should have content",
+  type: "fileHasContent",
+  params: [
+    () => {
+      const filename = "xxx.txt";
+      const _fs = require("fs");
+      _fs.writeFileSync(filename, "works!");
+      return filename;
+    },
+    "works!",
+  ],
+},
+```
+
 - **NEW** - now you can also pass functions! Example:
 
 ```js

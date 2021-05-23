@@ -1,6 +1,6 @@
 const subtest = (allTests, { file, value, chdir, stopOnError } = {}) => {
   const testTypes = require("./types");
-  const { error, dbg, dg, dy, header } = require("@nexssp/logdebug");
+  const { error, dbg, dg, dy, header, dr } = require("@nexssp/logdebug");
   const { yellow, bold, magenta, green } = require("@nexssp/ansi");
   const path = require("path");
   const { inspect } = require("util");
@@ -93,21 +93,32 @@ const subtest = (allTests, { file, value, chdir, stopOnError } = {}) => {
     }
 
     dy(bold(`chdir is: `, chdir));
-
-    const testExecuteResult = testTypes[`${typeOfTest}`](
-      ...subtestItem.params.map((p) => {
-        if (
-          (p !== null && typeof p === "object") ||
-          allTests.notEval ||
-          subtestItem.notEval
-        ) {
-          return p;
-        } else {
-          return evalTS(p, value);
-        }
-      }),
-      { chdir, testFunction: typeOfTestFunction }
-    );
+    let testExecuteResult;
+    try {
+      testExecuteResult = testTypes[`${typeOfTest}`](
+        ...subtestItem.params.map((p) => {
+          if (
+            (p !== null && typeof p === "object") ||
+            allTests.notEval ||
+            subtestItem.notEval
+          ) {
+            return p;
+          } else {
+            return evalTS(p, value);
+          }
+        }),
+        { chdir, testFunction: typeOfTestFunction }
+      );
+    } catch (e) {
+      dr(
+        bold(
+          "Error:\n",
+          `Check if test type exists in the current test: \nFILE: ${file}\nTEST: ${subtestItem.title}`
+        )
+      );
+      console.error(e);
+      process.exit(1);
+    }
 
     subtestItem.result = testExecuteResult;
     subtestItem.testBody = testBody;
