@@ -90,6 +90,7 @@ const path = require("path");
               : `Failed: 0`
           } `
         );
+        console.log(r.results);
       } else {
         ok(
           `${bold(yellow(r.file))}  ${green("OK: " + r.totalOk)} / ${

@@ -1,7 +1,6 @@
 const _fs = require("fs");
-function isFunction(f) {
-  return f && {}.toString.call(f) === "[object Function]";
-}
+const { compare, isFunction } = require("./compare");
+
 function fileExists(file) {
   if (isFunction(file)) {
     file = file();
@@ -38,18 +37,7 @@ function fileHasContent(file, regE) {
     return false;
   }
 
-  if (regE === true) {
-    if (test && test.length === 0) {
-      return false;
-    }
-  }
-
-  if (regE instanceof RegExp) {
-    return regE.test(test);
-    // process.exit(1);
-  } else if (test === regE) {
-    return true;
-  }
+  return compare(test, regE);
 }
 
 function notFileHasContent(file, regE) {

@@ -1,5 +1,18 @@
 # @nexssp/test
 
+- **NEW** file types:
+
+- \*.nexss-assert.js - now you can add just plain js files, which must run ok. You can use there also great NodeJS assert library. For more please look at compare function test in this repository `tests\compare.nexss-assert.js`
+
+```js
+// compare.nexss-assert.js
+const assert = require("assert"); // GREAT NodeJS library for testing
+const obj1 = { x: 1, y: { z: 1 } };
+const obj2 = { x: 1, y: { z: 11 } };
+
+assert.deepStrictEqual(obj1, obj2);
+```
+
 - **NEW** File checking exists, content
 
 New tests: **fileExists**, **notFileExists**, **fileHasContent**, **notFileHasContent**

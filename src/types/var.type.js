@@ -1,3 +1,5 @@
+const { compare } = require("./compare");
+
 function isFunction(f) {
   return f && {}.toString.call(f) === "[object Function]";
 }
@@ -8,12 +10,7 @@ function equal(test, regE) {
     console.log("Result of function: ", test);
   }
 
-  if (regE instanceof RegExp) {
-    return regE.test(test);
-    // process.exit(1);
-  } else if (test === regE) {
-    return true;
-  }
+  return compare(test, regE);
 }
 
 function notEqual(test, regE) {
