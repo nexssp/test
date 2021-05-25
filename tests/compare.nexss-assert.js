@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { compare } = require("../src/types/compare");
+const { compare } = require("../lib/types/compare");
 
 // Functions
 assert.ok(

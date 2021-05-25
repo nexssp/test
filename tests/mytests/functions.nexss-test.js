@@ -4,7 +4,7 @@ module.exports = {
       type: "equal",
       params: [
         () => {
-          const os = require("@nexssp/os");
+          const os = require("@nexssp/os/legacy");
           return os.name();
         },
         (process.platform = "win32"

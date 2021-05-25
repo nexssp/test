@@ -1,7 +1,7 @@
 const assert = require("assert");
-const { compare } = require("../src/types/compare");
+const { compare } = require("../lib/types/compare");
 
-const { createNewTestFolder } = require("../src/test");
+const { createNewTestFolder } = require("../lib/test");
 const testFolder = createNewTestFolder();
 
 assert.ok(compare(testFolder, /Nexss-test-/));
@@ -10,6 +10,3 @@ assert.ok(compare(testFolder, /Nexss-test-/));
 const tf = createNewTestFolder();
 const _fs = require("fs");
 assert.ok(_fs.existsSync(tf));
-
-// Below only works in the @nexssp/test testing.
-assert.match(process.env.NEXSS_TEST_FOLDER_CURRENT, /Nexss-test-/);

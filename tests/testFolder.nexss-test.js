@@ -1,4 +1,4 @@
-const { getNewTestFolder } = require("../src/test");
+const { getNewTestFolder } = require("../lib/test");
 module.exports = {
   nexsstests: [
     // UniqueTestValues is specified in the test definition.

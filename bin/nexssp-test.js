@@ -2,7 +2,7 @@
 const { testAll } = require("../");
 
 const { header, ok, info, error } = require("@nexssp/logdebug");
-const { bold, yellow, red, green } = require("@nexssp/ansi");
+const { bold, yellow, red, green, magenta } = require("@nexssp/ansi");
 const fs = require("fs");
 const path = require("path");
 (async () => {
@@ -48,7 +48,8 @@ const path = require("path");
   );
   info("Starting testing..");
   let result;
-  console.time(bold("@nexssp/test"));
+  const timeMark = bold(`@nexssp/test: ${magenta("v" + pkg.version)}`);
+  console.time(timeMark);
 
   // Below remove 1 for cache results (development)
   const file = require("path").resolve("./cache.nexss-test.json");
@@ -116,7 +117,7 @@ const path = require("path");
     ok(bold(`@nexssp/test -> done. Total ${totalOk} tests.`));
   }
 
-  console.timeEnd(bold("@nexssp/test"));
+  console.timeEnd(timeMark);
 })();
 //    const percentage = 100 - (compressed.code.length / code.length) * 100;
 // const percentageRounded = Math.round(percentage, 2);
