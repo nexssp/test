@@ -7,9 +7,9 @@ module.exports = {
           const os = require("@nexssp/os/legacy");
           return os.name();
         },
-        (process.platform = "win32"
+        process.platform == "win32"
           ? /(?:Windows)/
-          : /(?:Ubuntu|Alpine|somethingelse)/),
+          : /(?:Ubuntu|Alpine|somethingelse)/,
       ],
     },
   ],
