@@ -1,7 +1,10 @@
 # @nexssp/test
 
+Testing library, easy, many ways to accomplish testing..
+
+![image](https://user-images.githubusercontent.com/53263666/119671493-17b43a00-be3a-11eb-82d7-99cd2a819c75.png)
+
 - **NEW** new function **getNewTestFolder**, **createNewTestFolder**
-- ~~`process.env.NEXSS_TEST_FOLDER_CURRENT` - which can be used as current folder during assert tests. **@nexssp/test** creates new test folder for each test - you can access it just by this env variable.~~
 
 ```js
 const { createNewTestFolder } = require("@nexssp/test");
@@ -10,7 +13,7 @@ const testFolder = createNewTestFolder();
 
 - **NEW** file types:
 
-- **\*.nexss-assert.js** - create files with extension .nexss-assert.js and put testing there .. You can use there also **great NodeJS assert library**. For more please look at compare function test in this repository `tests\compare.nexss-assert.js`
+- **\*.nexss-assert.js** - create files with extension .nexss-assert.js and put testing there .. You can use there also **great NodeJS assert library**. For more please look at compare function test in this repository `tests\compare.nexss-assert.js`. Results from this type are also taken to the overall statistics of the **@nexssp/test**
 
 ```js
 // compare.nexss-assert.js
@@ -34,6 +37,8 @@ New tests: **fileExists**, **notFileExists**, **fileHasContent**, **notFileHasCo
 },
 ```
 
+- **NEW** - now you can also pass functions!
+
 ```js
 // Advanced Example (use of function): test creates file and test for its content.
 {
@@ -51,7 +56,7 @@ New tests: **fileExists**, **notFileExists**, **fileHasContent**, **notFileHasCo
 },
 ```
 
-- **NEW** - now you can also pass functions! Example:
+- Another example of using functions
 
 ```js
 // Example of the test with function
@@ -124,8 +129,8 @@ nexsstests: [
 ],
 ```
 
-- equal, match - is used to compare values. (also you can use regular expression, see above example)
-- notEqual, notMatch - negative of equal, match
+- **equal**, **match** - is used to compare values. (also you can use regular expression, see above example)
+- **notEqual**, **notMatch** - negative of equal, match
 
 ```js
 nexsstests: [
@@ -137,8 +142,51 @@ nexsstests: [
 ];
 ```
 
-## Examples
+## Difference between .nexss-test.js and nexss-assert.js tests
 
-In progress..
+### Example of .nexss-test.js
 
-- For more see Nexss Programmer's tests folder **2.4.0+**
+.nexss-test.js have more automatic things done like create test folder
+
+```js
+const commandBinPath = require("path").resolve(
+  __dirname,
+  "../bin/nexssp-command.js"
+);
+
+module.exports = {
+  nexsstests: [
+    {
+      type: "shouldContain",
+      params: [`node ${commandBinPath}`, /add.*command.*delete.*list.*/s],
+    },
+  ],
+};
+```
+
+### Example of .assert-test.js
+
+This example assert test is doing exacly the same as above \*.nexss-test.js. As you can see you have more control here on what is done. It is really up to you how you will use them.
+
+Assert test are just program, but there can be used for example great NodeJS library **assert**. But you can have a choice what you want to use it there. But these files are also taken to the overall statistics of **@nexss/test**
+
+```js
+const assert = require("assert");
+const { nSpawn } = require("@nexssp/system");
+
+process.chdir(__dirname);
+const commandBinPath = require("path").resolve("../bin/nexssp-command.js");
+
+// We create test dolder
+const { createNewTestFolder } = require("@nexssp/test");
+const testFolder = createNewTestFolder();
+console.log(`@test: ${testFolder}`);
+process.chdir(testFolder);
+// Default help
+const result1 = nSpawn(`node ${commandBinPath}`);
+assert.match(result1.stdout, /add.*command.*delete.*list.*/s);
+```
+
+## More Examples
+
+- For more see Nexss Programmer's tests folder in the other **@nexssp** packages..
