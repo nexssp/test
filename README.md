@@ -4,6 +4,29 @@ Testing library, easy, many ways to accomplish testing..
 
 ![image](https://user-images.githubusercontent.com/53263666/119671493-17b43a00-be3a-11eb-82d7-99cd2a819c75.png)
 
+## Note
+
+Users ask: "How to test binary from /bin/program" when it is not installed and we don't have it available in the shell.
+
+If your 'bin executable' is as **bin/nexssp-config.js**:
+
+```js
+const { join } = require("path");
+const binFolder = join(process.cwd(), "bin");
+
+module.exports = {
+  nexsstests: [
+    {
+      title: "display menu",
+      params: [
+        `node ${join(binFolder, "nexssp-config.js")}`,
+        /^\@nexssp.*config.*get\|g/s,
+      ],
+    },
+  ],
+};
+```
+
 - **NEW** new function **getNewTestFolder**, **createNewTestFolder**
 
 ```js
