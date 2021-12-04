@@ -27,7 +27,8 @@ const path = require("path");
 
   if (params.select) {
     if (Array.isArray(params.select)) {
-      glob = params.select.map((e) => "**/*" + e + "*.nexss-test.js");
+      // glob = params.select.map((e) => "**/*" + e + "*.nexss-test.js");
+      glob = "**/*{" + params.select.join(",") + "}*.nexss-test.js";
     } else {
       glob = "**/*" + params.select + "*.nexss-test.js";
     }
@@ -35,11 +36,12 @@ const path = require("path");
     glob = "**/*.nexss-test.js";
   }
 
-  if (!Array.isArray(params.ignore)) {
-    ignore = ignore.concat("!**/" + params.ignore + ".nexss-test.js");
-  } else {
-    const addIgnore = params.ignore.map((e) => "!**/*" + e + "*.nexss-test.js");
+  if (Array.isArray(params.ignore)) {
+    const addIgnore = "!**/*{" + params.ignore.join(",") + "}*.nexss-test.js";
     ignore = ignore.concat(addIgnore);
+  } else {
+    // ignore = ignore.concat("!**/" + params.ignore + ".nexss-test.js");
+    ignore = ignore.concat("!**/" + params.ignore + ".nexss-test.js");
   }
 
   header(
