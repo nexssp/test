@@ -12,10 +12,7 @@
     "test": "node ./bin/nexssp-test.js --debug",
     "test:list": "nexssp-test --dry",
     "test:languages:verbose": "nexssp-test --select=languages --debug",
-    "test:all:long": "nexssp-test",
-    "prepare2": "npm run nexss:build",
-    "nexss:build": "npx @nexssp/min@1.0.6",
-    "nexss:clean": ""
+    "test:all:long": "nexssp-test"
   },
   "author": {
     "name": "Marcin Polak",
@@ -51,12 +48,12 @@
     }
   ],
   "dependencies": {
-    "@nexssp/ansi": "^1.1.2",
-    "@nexssp/extend": "^2.0.4",
-    "@nexssp/logdebug": "^1.0.18",
-    "@nexssp/os": "^2.0.19",
-    "@nexssp/system": "^1.1.6",
-    "fast-glob": "^3.2.7",
+    "@nexssp/ansi": "^1.1.5",
+    "@nexssp/extend": "^2.0.9",
+    "@nexssp/logdebug": "^1.0.20",
+    "@nexssp/os": "^2.0.21",
+    "@nexssp/system": "^1.1.9",
+    "fast-glob": "^3.2.11",
     "minimist": "^1.2.5"
   },
   "eslintConfig": {
