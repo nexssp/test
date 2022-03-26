@@ -9,7 +9,9 @@ const path = require("path");
   const params = require("minimist")(process.argv.slice(2));
   const pkg = require("../package.json");
   if (params._[0] === "help") {
-    console.log(`   ${bold(pkg.name)}@${pkg.version}`);
+    console.log(
+      `   ${bold(pkg.name)}@${pkg.version}, Node.js: ${process.version}`
+    );
     console.log(`     --select - select name to test. Can be multiple.`);
     console.log(`     --ignore - select ignore to test. Can be multiple.`);
     console.log(`     --debug - will show details about errors.`);
@@ -50,7 +52,9 @@ const path = require("path");
   );
   info("Starting testing..");
   let result;
-  const timeMark = bold(`@nexssp/test: ${magenta("v" + pkg.version)}`);
+  const timeMark = bold(
+    `@nexssp/test: ${magenta("v" + pkg.version)}, Node.js: ${process.version}`
+  );
   console.time(timeMark);
 
   // Below remove 1 for cache results (development)
