@@ -51,10 +51,10 @@
     "@nexssp/ansi": "^1.1.5",
     "@nexssp/extend": "^2.0.9",
     "@nexssp/logdebug": "^1.0.20",
-    "@nexssp/os": "^2.0.21",
-    "@nexssp/system": "^1.1.9",
+    "@nexssp/os": "^2.0.30",
+    "@nexssp/system": "^1.1.10",
     "fast-glob": "^3.2.11",
-    "minimist": "^1.2.5"
+    "minimist": "^1.2.6"
   },
   "eslintConfig": {
     "extends": "plugin:unicorn/recommended"
